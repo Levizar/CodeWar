@@ -1,8 +1,8 @@
-function diamond(n) {
+const diamond = (n) => {
     if (n % 2 == 0 || n <= 0) {
         return null
     } else {
-        const array = [];
+        let array = [];
         const limit = Math.floor(n / 2);
         for (i = 0; i < limit; i++) {
             let string = "";
