@@ -4,7 +4,7 @@ const diamond = (n) => {
     } else if (n == 1) {
         return "*\n"
     } else {
-        let array = [];
+        let arrAnswer = [];
         const limit = Math.floor((n / 2));
         for (i = 0; i < limit; i++) {
             let string = "";
@@ -14,21 +14,13 @@ const diamond = (n) => {
             let stringTrimed = string
             stringTrimed = stringTrimed.trim();
             stringTrimed = stringTrimed.concat("\n");
-            array[i] = string + "*" + stringTrimed;
+            arrAnswer[i] = string + "*" + stringTrimed;
         }
-        arrayBot = array.reverse();
-        array.push((("*".repeat(n)).concat("\n")));
-        array = [...array, ...arrayBot];
-        const XD = array.join('');
+        const arrayBot = [...arrAnswer]; // Need to do that to create a new array preventing reverse to apply to the 2 arrays
+        arrayBot.reverse();
+        arrAnswer.push((("*".repeat(n)).concat("\n")));
+        arrAnswer = [...arrAnswer, ...arrayBot];
+        const XD = arrAnswer.join('');
         return XD
     }
 }
-
-à obtenir
-    ' *\n***\n *\n'
-obtenu
-    ' *\n***\n *\n***\n'
-à obtenir
-    '  *\n ***\n*****\n ***\n  *\n'
-obtenu
-    ' ***\n  *\n*****\n ***\n  *\n*****\n'
