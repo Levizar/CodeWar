@@ -1,3 +1,4 @@
+// First solution
 const diamond = (n) => {
     if (n % 2 == 0 || n <= 0) {
         return null
@@ -22,4 +23,35 @@ const diamond = (n) => {
         const answer = arrAnswer.join('');
         return answer
     }
+}
+
+// second solution
+
+const diamond = (n) => {
+    if(n%2==0 || n<1) return null;
+    let answer = [];
+    for(let i=0; i < n ; i++){
+        const numbSpace = Math.abs(Math.floor(n/2) - i);
+        const numbStar =  n - (2*numbSpace);
+        const str = " ".repeat(numbSpace) + "*".repeat(numbStar);
+        answer.push(str);
+    }
+    answer = answer.join("\n").concat("\n");
+    return answer
+}
+
+// third solution : not done yet
+// = mix of the 2 below : gen only n/2 and duplicate it
+
+const diamond = (n) => {
+    if(n%2==0 || n<1) return null;
+    let answer = [];
+    for(let i=0; i < n/2 ; i++){
+        const numbSpace = Math.abs(Math.floor(n/2) - i);
+        const numbStar =  n - (2*numbSpace);
+        const str = " ".repeat(numbSpace) + "*".repeat(numbStar);
+        answer.push(str);
+    }
+    answer.join("\n").concat("\n");
+    return answer
 }
