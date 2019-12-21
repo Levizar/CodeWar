@@ -12,15 +12,14 @@ const diamond = (n) => {
                 (j < (limit - i)) ? (string = string.concat(" ")) : (string = string.concat("*"));
             }
             let stringTrimed = string
-            stringTrimed = stringTrimed.trim();
-            stringTrimed = stringTrimed.concat("\n");
+            stringTrimed = stringTrimed.trim().concat("\n");
             arrAnswer[i] = string + "*" + stringTrimed;
         }
-        const arrayBot = [...arrAnswer]; // Need to do that to create a new array preventing reverse to apply to the 2 arrays
-        arrayBot.reverse();
+        // This line make a real copy of arrAnswer. If I don't, .reverse() method applies itself to both arrayBot and arrAnswer
+        const arrayBot = [...arrAnswer].reverse();
         arrAnswer.push((("*".repeat(n)).concat("\n")));
         arrAnswer = [...arrAnswer, ...arrayBot];
-        const XD = arrAnswer.join('');
-        return XD
+        const answer = arrAnswer.join('');
+        return answer
     }
 }
