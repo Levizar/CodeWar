@@ -1,9 +1,8 @@
 function XO(str) {
     const string = str.toUpperCase();
-    let arrXmatch, arrOmatch = [];
     arrXmatch = string.match(/[X]/g);
     arrOmatch = string.match(/[O]/g);
-    
+    // If array.match() == null => can't use length on it
     if(arrOmatch === null || arrXmatch === null){
       if(arrOmatch === null && arrXmatch === null){
           return true  
