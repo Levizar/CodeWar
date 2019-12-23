@@ -45,13 +45,17 @@ const diamond = (n) => {
 
 const diamond = (n) => {
     if(n%2==0 || n<1) return null;
+    if(n==1) return "*\n";
     let answer = [];
-    for(let i=0; i < n/2 ; i++){
+    for(let i=0; i < Math.floor(n/2) ; i++){
         const numbSpace = Math.abs(Math.floor(n/2) - i);
         const numbStar =  n - (2*numbSpace);
         const str = " ".repeat(numbSpace) + "*".repeat(numbStar);
         answer.push(str);
     }
-    answer.join("\n").concat("\n");
+    let copy = [...answer].reverse();
+    answer.push("*".repeat(n));
+    answer = [...answer, ...copy];
+    answer = answer.join("\n").concat("\n");
     return answer
 }
