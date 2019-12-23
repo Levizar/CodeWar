@@ -4,8 +4,7 @@ function likes(names) {
         return "no one likes this"
     } else if(namesLength < 2){
         return `${names[0]} likes this`
-    } 
-    else if(namesLength < 4){
+    } else if(namesLength < 4){
         const last = names.pop();
         names = names.join(', ');
         return `${names} and ${last} like this`
