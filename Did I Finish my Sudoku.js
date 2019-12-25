@@ -8,8 +8,8 @@ const doneOrNot = (board) => {
     for (let i = 0; i < 9; i++) {
         // Check line
         const lineSet = new Set(board[i]);
-        lineSet.length === 9 ? 0 : test = false;
-
+        lineSet.size === 9 ? 0 : test = false;
+        
         // check column : construct an array for the column
         const currentColumn = [];
         for (let j = 0; j < 9; j++) {
@@ -44,12 +44,12 @@ const doneOrNot = (board) => {
             arrArea[a].push(board[i][j])
         }
         const columnSet = new Set(currentColumn);
-        columnSet.length === 9 ? 0 : test = false;
+        columnSet.size === 9 ? 0 : test = false;
     }
 
-    arrArea.forEach(area => {
+    arrArea.forEach((area, i) => {
         areaSet = new Set(area);
-        areaSet.length === 9 ? 0 : test = false;
+        areaSet.size === 9 ? 0 : test = false;
     });
 
     if (test) {
