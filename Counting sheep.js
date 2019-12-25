@@ -1,1 +1,1 @@
-const countSheeps = (arrayOfSheep) => arrayOfSheep.filter(elm => elm === true).length
+const countSheeps = arrayOfSheep => arrayOfSheep.filter(elm => elm === true).length;

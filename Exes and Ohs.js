@@ -5,16 +5,15 @@ function XO(str) {
     // If array.match() == null => can't use length on it
     if (arrOmatch === null || arrXmatch === null) {
         if (arrOmatch === null && arrXmatch === null) {
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     } else {
         if (arrOmatch.length == arrXmatch.length) {
-            return true
+            return true;
         } else {
             return false;
-
         }
     }
 }

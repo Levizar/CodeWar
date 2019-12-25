@@ -1,9 +1,6 @@
 const doneOrNot = (board) => {
     let test = true;
-    const arrArea = [];
-    for (let i = 0; i < 9; i++) {
-        arrArea[i] = [];
-    }
+    const arrArea = [...Array(9).keys()].map(x => []);
 
     for (let i = 0; i < 9; i++) {
         // Check line

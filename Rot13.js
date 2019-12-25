@@ -12,7 +12,7 @@ function rot13(message) {
     alpha = [...alpha, ...alpha.map(elm => elm.toLowerCase())];
     code = [...code, ...code.map(elm => elm.toLowerCase())];
 
-    let CodedMessage = [...message].map(elm => code[alpha.indexOf(elm)] ? code[alpha.indexOf(elm)] : elm);
-    CodedMessage = CodedMessage.join('');
-    return CodedMessage
+    let CodedMessage = [...message].map(elm => (code[alpha.indexOf(elm)] ? code[alpha.indexOf(elm)] : elm));
+    CodedMessage = CodedMessage.join("");
+    return CodedMessage;
 }

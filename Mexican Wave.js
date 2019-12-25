@@ -2,9 +2,9 @@ function wave(string) {
     function waveSolo(word) {
         let arr = [];
         for (let i = 0; i < word.length; i++) {
-            let a = word.split('');
+            let a = word.split("");
             a[i] = a[i].toUpperCase();
-            a = a.join('');
+            a = a.join("");
             arr[i] = a;
         }
         return arr;
@@ -23,9 +23,9 @@ function wave(string) {
         let array = waveSolo(workingString);
         for (let i = 0; i < array.length; i++) {
             for (let j = 0; j < arrOfSpace.length; j++) {
-                array[i] = [array[i].slice(0, arrOfSpace[j]), " ", array[i].slice(arrOfSpace[j])].join('');
+                array[i] = [array[i].slice(0, arrOfSpace[j]), " ", array[i].slice(arrOfSpace[j])].join("");
             }
         }
-        return array
+        return array;
     }
 }
