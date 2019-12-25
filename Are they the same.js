@@ -1,5 +1,5 @@
 // First version : not ok
-const comp = (a,b) => {
+const comp = (a, b) => {
     if (a === null || b === null || a.length !== b.length) return false
     if (a.join('') === b.join('')) return true
     let aa = a.map(elm => elm * elm);
@@ -12,7 +12,7 @@ const comp = (a,b) => {
 
 
 // Second version : can be tricked
-const comp = (a,b) => {
+const comp = (a, b) => {
     if (a === null || b === null || a.length !== b.length) return false
     if (a.join('') === b.join('')) return true
     let test = true
@@ -23,7 +23,7 @@ const comp = (a,b) => {
 }
 
 // combine the two previous one:
-const comp = (a,b) => {
+const comp = (a, b) => {
     if (a === null || b === null || a.length !== b.length) return false
     if (a.join('') === b.join('')) return true
     let test = true
@@ -40,4 +40,4 @@ const comp = (a,b) => {
 }
 
 // simpler solution
-const comp = (a, b) => (a1 === null || a2 === null) && a.map(x => x * x).sort().join`` === b.sort().join``
+const comp = (a, b) => (a1 === null || a2 === null) && a.map(x => x * x).sort().join `` === b.sort().join ``

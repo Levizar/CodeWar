@@ -1,11 +1,10 @@
-
-function squareDigits(num){
+function squareDigits(num) {
   var arr = [];
   var numstring = num.toString();
   arr = numstring.split();
   arr.map(Number);
 
-  for (i=0; i< arr.length; i++) {
+  for (i = 0; i < arr.length; i++) {
     arr[i] = arr[i] * arr[i];
   }
 

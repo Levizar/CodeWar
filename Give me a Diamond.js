@@ -28,11 +28,11 @@ const diamond = (n) => {
 // second solution
 
 const diamond = (n) => {
-    if(n%2==0 || n<1) return null;
+    if (n % 2 == 0 || n < 1) return null;
     let answer = [];
-    for(let i=0; i < n ; i++){
-        const numbSpace = Math.abs(Math.floor(n/2) - i);
-        const numbStar =  n - (2*numbSpace);
+    for (let i = 0; i < n; i++) {
+        const numbSpace = Math.abs(Math.floor(n / 2) - i);
+        const numbStar = n - (2 * numbSpace);
         const str = " ".repeat(numbSpace) + "*".repeat(numbStar);
         answer.push(str);
     }
@@ -44,12 +44,12 @@ const diamond = (n) => {
 // = mix of the 2 below : gen only n/2 and duplicate it
 
 const diamond = (n) => {
-    if(n%2==0 || n<1) return null;
-    if(n==1) return "*\n";
+    if (n % 2 == 0 || n < 1) return null;
+    if (n == 1) return "*\n";
     let answer = [];
-    for(let i=0; i < Math.floor(n/2) ; i++){
-        const numbSpace = Math.abs(Math.floor(n/2) - i);
-        const numbStar =  n - (2*numbSpace);
+    for (let i = 0; i < Math.floor(n / 2); i++) {
+        const numbSpace = Math.abs(Math.floor(n / 2) - i);
+        const numbStar = n - (2 * numbSpace);
         const str = " ".repeat(numbSpace) + "*".repeat(numbStar);
         answer.push(str);
     }
