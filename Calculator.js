@@ -1,46 +1,58 @@
 const Calculator = function () {
     this.evaluate = string => {
-        let initArr = string.split(" ");
+
+        // Get the () group and use recursion on it until it found the smallest group
+        while (/[()]/g.test(string)) {
+            string = string.replace(/[(][^()]*[)]/g, (corresp) => {
+                corresp = corresp.split(' ');
+                corresp.shift();
+                corresp.pop();
+                corresp = corresp.join(' ')
+                return this.evaluate(corresp);
+            })
+        }
+
+        let initArr = string.split(' ');
 
         // order of operation P E M D A S
 
         // Check for Parentheses + recursion on the inside:
         // Voir si ne peut pas être remplacé par une regex : capturing group
         // et replace les capturing group par leur résultat
-        for (let i = 0; i < initArr.length; i++) {
-            // Enfermer le résultat dans une autre array et effectuer les opérations.
-            // => fonction récursive
-            let howMuchOpenPar = 0;
-            let startIndexForSplice;
-            if (initArr[i] === "(") {
-                howMuchOpenPar += 1;
-                if (howMuchOpenPar === 1) {
-                    indexForSplice = i;
-                }
-            } else if (initArr[i] === ")") {
-                if (howMuchOpenPar > 1) {
-                    howMuchOpenPar -= 1;
-                } else if (howMuchOpenPar === 1) {
-                    (1 + 3 + 4)
-                    howMuchOpenPar -= 1;
-                    const numberOfCharToCalculate = i - startIndexForSplice + 1;
-                    let toCalculate = initArr.splice(startIndexForSplice, numberOfCharToCalculate);
-                    toCalculate.shift();
-                    toCalculate.pop();
-                    // à vérifier si la ligne suivante marche. (voir si le this.evaluate(toCalculate) est ok)
-                    const result = this.evaluate(toCalculate);
-                    initArr.splice(startIndexForSplice, 0, result);
-                    // resume the index just behind the last parenthesis position.
-                    i = startIndexForSplice - 1;
-                }
-            }
-            // End of loop for parentheses
-        }
+        // for (let i = 0; i < initArr.length; i++) {
+        //     // Enfermer le résultat dans une autre array et effectuer les opérations.
+        //     // => fonction récursive
+        //     let howMuchOpenPar = 0;
+        //     let startIndexForSplice;
+        //     if (initArr[i] === "(") {
+        //         howMuchOpenPar += 1;
+        //         if (howMuchOpenPar === 1) {
+        //             indexForSplice = i;
+        //         }
+        //     } else if (initArr[i] === ")") {
+        //         if (howMuchOpenPar > 1) {
+        //             howMuchOpenPar -= 1;
+        //         } else if (howMuchOpenPar === 1) {
+        //             (1 + 3 + 4)
+        //             howMuchOpenPar -= 1;
+        //             const numberOfCharToCalculate = i - startIndexForSplice + 1;
+        //             let toCalculate = initArr.splice(startIndexForSplice, numberOfCharToCalculate);
+        //             toCalculate.shift();
+        //             toCalculate.pop();
+        //             // à vérifier si la ligne suivante marche. (voir si le this.evaluate(toCalculate) est ok)
+        //             const result = this.evaluate(toCalculate);
+        //             initArr.splice(startIndexForSplice, 0, result);
+        //             // resume the index just behind the last parenthesis position.
+        //             i = startIndexForSplice - 1;
+        //         }
+        //     }
+        //     // End of loop for parentheses
+        // }
 
-        ///////////////////// exposant à faire
-        for (let i = 0; i < initArr.length; i++) {
+        // ///////////////////// exposant à faire
+        // for (let i = 0; i < initArr.length; i++) {
 
-        }
+        // }
 
         // function to perform one of the 4 basic operation
         function basicOperation(operationToPerform) {
@@ -55,9 +67,7 @@ const Calculator = function () {
                             j -= 1;
                         } else {
                             isSearchingNumber = false;
-                            console.log("i : ", i, initArr);
                             nbr1 = initArr.splice((j + 1), (i - j - 1));
-                            console.log("i : ", i, initArr);
                         }
                     }
                     startIndexForSplice = j + 1;
@@ -113,8 +123,7 @@ function test(stringTest) {
     console.log("***********", stringTest, " = ", b);
 }
 
-test("22 * 6 + 22 + 22 + 22 + 22");
-test("22 * (10 / 10)");
+test("( ( 2 * 2 + 2 ) * 2 ) + 2");
 
 
 
