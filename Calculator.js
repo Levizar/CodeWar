@@ -1,7 +1,7 @@
 const Calculator = function () {
     this.evaluate = string => {
-
-        // Get the () group and use recursion on it until it found the smallest group
+        console.log("input: ", string);
+        // Get the () group and use recursion on it until it finds the smallest group
         while (/[()]/g.test(string)) {
             string = string.replace(/[(][^()]*[)]/g, (corresp) => {
                 corresp = corresp.split(' ');
@@ -12,82 +12,17 @@ const Calculator = function () {
             })
         }
 
-        let initArr = string.split(' ');
-
-        // order of operation P E M D A S
-
-        // Check for Parentheses + recursion on the inside:
-        // Voir si ne peut pas être remplacé par une regex : capturing group
-        // et replace les capturing group par leur résultat
-        // for (let i = 0; i < initArr.length; i++) {
-        //     // Enfermer le résultat dans une autre array et effectuer les opérations.
-        //     // => fonction récursive
-        //     let howMuchOpenPar = 0;
-        //     let startIndexForSplice;
-        //     if (initArr[i] === "(") {
-        //         howMuchOpenPar += 1;
-        //         if (howMuchOpenPar === 1) {
-        //             indexForSplice = i;
-        //         }
-        //     } else if (initArr[i] === ")") {
-        //         if (howMuchOpenPar > 1) {
-        //             howMuchOpenPar -= 1;
-        //         } else if (howMuchOpenPar === 1) {
-        //             (1 + 3 + 4)
-        //             howMuchOpenPar -= 1;
-        //             const numberOfCharToCalculate = i - startIndexForSplice + 1;
-        //             let toCalculate = initArr.splice(startIndexForSplice, numberOfCharToCalculate);
-        //             toCalculate.shift();
-        //             toCalculate.pop();
-        //             // à vérifier si la ligne suivante marche. (voir si le this.evaluate(toCalculate) est ok)
-        //             const result = this.evaluate(toCalculate);
-        //             initArr.splice(startIndexForSplice, 0, result);
-        //             // resume the index just behind the last parenthesis position.
-        //             i = startIndexForSplice - 1;
-        //         }
-        //     }
-        //     // End of loop for parentheses
-        // }
-
-        // ///////////////////// exposant à faire
-        // for (let i = 0; i < initArr.length; i++) {
-
-        // }
-
-        // function to perform one of the 4 basic operation
         function basicOperation(operationToPerform) {
+            let initArr = string.split(' ');
             for (let i = 0; i < initArr.length; i++) {
-                if (initArr[i] === operationToPerform) {
-                    let isSearchingNumber = true;
-                    let j = i - 1;
-                    let nbr1, nbr2;
-                    let result, startIndexForSplice
-                    while (isSearchingNumber) {
-                        if (/[\d]/.test(initArr[j])) {
-                            j -= 1;
-                        } else {
-                            isSearchingNumber = false;
-                            nbr1 = initArr.splice((j + 1), (i - j - 1));
-                        }
-                    }
-                    startIndexForSplice = j + 1;
-                    isSearchingNumber = true;
-                    j = i + 1;
-                    while (isSearchingNumber) {
-                        if (/[\d]/.test(initArr[j])) {
-                            j += 1;
-                        } else {
-                            isSearchingNumber = false;
-                            nbr2 = initArr.splice((i), (j - i));
-                            // reset the i to before the previous position
-                            i = j - 2;
-                        }
-                    }
-
-                    nbr1 = parseFloat(nbr1.join(''));
-                    nbr2 = parseFloat(nbr2.join(''));
-
-                    switch (operationToPerform) {
+                if (operationToPerform.includes(initArr[i])) {
+                    const nbr1 = parseFloat(initArr[i - 1]);
+                    const nbr2 = parseFloat(initArr[i + 1]);
+                    let result;
+                    switch (initArr[i]) {
+                        case "**":
+                            result = Math.pow(+nbr1, +nbr2);
+                            break;
                         case "*":
                             result = +nbr1 * nbr2;
                             break;
@@ -101,20 +36,27 @@ const Calculator = function () {
                             result = +nbr1 - nbr2;
                             break;
                         default:
+                            console.log("default case operation : that shouldn't happen");
                             break;
                     }
-                    initArr.splice(startIndexForSplice, 1, result);
+                    initArr.splice(i - 1, 3, result);
+                    i = i - 1;
                 }
             }
-        }
-        ["*", "/", "+", "-"].forEach(operation => basicOperation(operation));
-
-        // To do: other operation: EMDAS
-
-        return initArr.join('');
+            string = initArr.join(' ');
+        };
+        // Execute the operations
+        [
+            ["**"],
+            ["*", "/"],
+            ["+", "-"]
+        ].forEach(operation => {
+            basicOperation(operation)
+            console.log(string);
+        });
+        return string;
     };
-};
-
+}
 // test script:
 
 function test(stringTest) {
@@ -123,7 +65,10 @@ function test(stringTest) {
     console.log("***********", stringTest, " = ", b);
 }
 
-test("( ( 2 * 2 + 2 ) * 2 ) + 2");
+// test("2 * 2 * 2");
+test("2 + 2 - 2 + 2 * 2") // -2
+// test("28 - 78 * 18 * 68 + 85 - 17"); // - 95 376
+
 
 
 
