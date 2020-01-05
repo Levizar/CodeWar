@@ -1,4 +1,4 @@
-function determinant(m) {
+const determinant = m => {
     switch (m.length) {
         case 1:
             return m[0][0];
@@ -17,4 +17,4 @@ function determinant(m) {
             return det;
             break;
     }
-}
+};
