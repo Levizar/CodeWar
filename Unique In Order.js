@@ -1,9 +1,5 @@
-const uniqueInOrder = iterable => {
-    iterable.split("").reduce((acc, item) => {
-        item === acc[acc.length - 1] ? acc : [...acc, item];
-    }, []);
-};
+// Split make the function crash if iterable is already an array
+const uniqueInOrder = iterable => iterable.split("").reduce((acc, item) => item === acc[acc.length - 1] ? acc : [...acc, item], []);
 
-for (let index = 0; index < array.length; index++) {
-    const element = array[index];
-}
+// add a condition for the split
+const uniqueInOrder = iterable => (Array.isArray(iterable) ? iterable : iterable.split("")).reduce((acc, item) => item === acc[acc.length - 1] ? acc : [...acc, item], []);
