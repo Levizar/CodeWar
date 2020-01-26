@@ -52,7 +52,6 @@ const validateBattlefield = field => {
     // 2) Check numbers of ships :
     // At this point ships aren't touching so we can assume that every touching point are part of a ship
     const checkingField = field.map(line => line.map(elm => false));
-
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field[i].length; j++) {
             // has ij already been checked ?
@@ -107,49 +106,8 @@ const validateBattlefield = field => {
     }
 
     // At this point we know there isn't too much ship but we have to check if there is too few of it
+    for (const [ship, car] of shipsArr) if (car.expected != ships[ship]["counted"]) return false;
 
     // If the grid passes all the test, then it's true
     return true;
 };
-
-// // function to check if corner are occupied
-// const isCornerOccupied = (i, j) => {
-//     if(i === 0 && j === 0){
-//         if(field[i+1][j+1]){
-//             return false
-//         }
-//     }else if(i === 0 && j === field[i].length){
-//         if(field[i+1][j-1]){
-//             return false
-//         }
-//     }else if(i === 0){
-//         if(field[i+1][j+1] || field[i+1][j-1]){
-//             return false
-//         }
-//     }else if(i === field.length && j === 0){
-//         if(field[i-1][j+1]){
-//             return false
-//         }
-//     }else if(i === field.length && j === field[i].length){
-//         if(field[i-1][j-1]){
-//             return false
-//         }
-//     }else if(i === field.length){
-//         if(field[i-1][j-1] || field[i-1][j+1]){
-//             return false
-//         }
-//     }else if(j === 0){
-//         if(field[i-1][j+1] || field[i+1][j+1]){
-//             return false
-//         }
-//     }else if(j === field[i].length){
-//         if(field[i-1][j-1] || field[i+1][j-1]){
-//             return false
-//         }
-//     }else{
-//         if(field[i-1][j-1] || field[i-1][j+1] || field[i+1][j-1] || field[i+1][j+1]){
-//             return false
-//         }
-//     }
-//     return true
-// }
