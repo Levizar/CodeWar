@@ -84,7 +84,7 @@ def validate_battlefield(field):
                     # We have the size of the ship, we have to get the type and increment its count
                     checking = True
                     for ship in ships:
-                        if ship["size"] == size:
+                        if ships[ship]["size"] == size:
                             checking = False
                             ships[ship]["counted"] += 1
                             if ships[ship]["counted"] > ships[ship]["expected"]: return False
@@ -94,7 +94,7 @@ def validate_battlefield(field):
 
     # At this point we know there isn't too much ship but we have to check if there is too few of it
     for ship in ships: 
-        if ship["expected"] != ship["counted"]: return False
+        if ships[ship]["expected"] != ship["counted"]: return False
 
     # If the grid pass all the test then the grid is valid
     return True
