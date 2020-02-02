@@ -16,4 +16,4 @@ Here is my actual level on codewars.
 
 [![Levizar codewars](https://www.codewars.com/users/Levizar/badges/large)](https://www.codewars.com/users/Levizar)
 
-You can access my profil and check the kata I have done.
+You can access my profil and check the katas I have done or check my solutions in this repository.
