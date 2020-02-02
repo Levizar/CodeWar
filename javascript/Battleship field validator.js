@@ -24,9 +24,6 @@ const validateBattlefield = field => {
     };
     const shipsArr = Object.keys(ships).map((ship, i, arr) => [ship, Object.values(ships)[i]]);
 
-    const copyField = field;
-    field.push();
-
     // 1) Check for touching ships
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field[i].length; j++) {
