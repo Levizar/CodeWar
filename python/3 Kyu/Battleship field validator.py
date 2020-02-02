@@ -43,7 +43,7 @@ def validate_battlefield(field):
                 if ((((i - 1 >= 0) and field[i - 1][j]) or ((i + 1 < len(field)) and field[i + 1][j])) and ((field[i] and field[i][j - 1]) or (field[i] and field[i][j + 1]))): return False
     # 2) Check numbers of ships :
     # At this point ships aren't touching so we can assume that every touching point are part of a ship
-    checking_Field = list(map(lambda line: map(lambda elm: False, line), field))
+    checking_Field = list(map(lambda line: list(map(lambda elm: False, line)), field))
     for i in range(len(field)):
         for j in range(len(field[i])):
             # has ij already been checked ?
