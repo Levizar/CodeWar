@@ -41,7 +41,7 @@ const validateBattlefield = field => {
                 // check if ships from size 4,3,2 are touching by checking if lines cross
                 // We do not verify the size 1 because they will not be counted as submarines if they touch with another which lead to false disposition
                 // the first field[i-/+1] condition verify if the line exist before acceding to the sub array
-                if (((field[i - 1] && field[i - 1][j]) || (field[i + 1] && field[i + 1][j])) && ((field[i] && field[i][j - 1]) || (field[i] && field[i][j + 1]))) return false;
+                if (((field[i - 1] && field[i - 1][j]) || (field[i + 1] && field[i + 1][j])) && (field[i][j - 1] || field[i][j + 1])) return false;
             }
         }
     }
