@@ -1,6 +1,5 @@
 const Calculator = function () {
     this.evaluate = string => {
-        console.log("input: ", string);
         // Get the () group and use recursion on it until it finds the smallest group
         while (/[()]/g.test(string)) {
             string = string.replace(/[(][^()]*[)]/g, (corresp) => {
