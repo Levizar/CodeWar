@@ -1,0 +1,1 @@
+const z = l => parseInt(l, 2).toString(2)
