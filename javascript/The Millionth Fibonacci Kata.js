@@ -22,7 +22,6 @@
 //     return (phiexpn) / ((dixepx15n) * sqrt5BigInt);
 // }
 
-
 // let lol = fib(0);
 // let lol = fib(1);
 // let lol = fib(3);
@@ -46,19 +45,13 @@
 //     return q
 // }
 
-
-
-
-
-
-
 // return Math.round(Math.pow(phi, n) / Math.sqrt(5));
 
 // function fastExp(b, n) {
 //     if (n % 2n == 0n || n % 2 == 0) {
 //         return (b**2) * fastExp(b,(n/2n))
 //     } else{
-//         return b ** 
+//         return b **
 //     }
 // }
 
@@ -92,71 +85,93 @@
 //     return fib(n - 2) + fib(n - 1);
 // }
 
-
-
-
-
-
-
-//// TEST MULTIPLICATION MATRICIELLE
+//// Méthode MATRICIELLE
 
 // let a = [
 //     [0, 1],
 //     [1, 1]
 // ];
 
-function fastExpSquaredMat(mat, n) {
-    const a = mat[0][0];
-    const b = mat[0][1];
-    const c = mat[1][0];
-    const d = mat[1][1];
-    if (n == 0n) {
+// function fastExpSquaredMat(mat, n) {
+//     const a = mat[0][0];
+//     const b = mat[0][1];
+//     const c = mat[1][0];
+//     const d = mat[1][1];
+//     if (n == 1n) {
+//         return mat;
+//     } else if (n == 2n) {
+//         const ans = [
+//             [a * a + b * c, a * b + b * d],
+//             [c * a + d * c, c * b + d * d]
+//         ];
+//         return fastExpSquaredMat(ans, n / 2n);
+//     } else if (n % 2n == 0n) {
+//         return fastExpSquaredMat(fastExpSquaredMat(mat, n / 2n), 2n);
+//     } else {
+//         const sousMat = fastExpSquaredMat(mat, n - 1n);
+//         // mat * sousMat
+//         const e = sousMat[0][0];
+//         const f = sousMat[0][1];
+//         const g = sousMat[1][0];
+//         const h = sousMat[1][1];
+//         const ans = [
+//             [e * a + f * c, e * b + f * d],
+//             [g * a + h * c, g * b + h * d]
+//         ];
+//         return ans;
+//     }
+// }
+
+// function fib(n) {
+//     n = BigInt(n);
+//     if (n == 0n) return 0n;
+//     if (n == 1n) return 1n;
+//     if (n < 0n) return fib(n + 2n) - fib(n + 1n);
+//     let matI = [
+//         [0n, 1n],
+//         [1n, 1n]
+//     ];
+//     const firstTerm = fastExpSquaredMat(matI, n);
+//     const a = firstTerm[0][0];
+//     const b = firstTerm[0][1];
+//     const c = firstTerm[1][0];
+//     const d = firstTerm[1][1];
+//     const lastMat = [b, d];
+//     return b;
+// }
+
+console.log(fib(2000000), " expected: 0n"); // 0n
+
+const fastExpSquaredMat = (mat, n) => {
+    if (n == 1n) {
         return mat;
     } else if (n == 2n) {
-        const ans = [
-            [(a * a + b * c), (a * b + b * d)],
-            [(c * a + d * c), (c * b + d * d)]
-        ];
-        return fastExpSquaredMat(ans, n / 2n);
+        return fastExpSquaredMat(
+            [
+                [mat[0][0] * mat[0][0] + mat[0][1] * mat[1][0], mat[0][0] * mat[0][1] + mat[0][1] * mat[1][1]],
+                [mat[1][0] * mat[0][0] + mat[1][1] * mat[1][0], mat[1][0] * mat[0][1] + mat[1][1] * mat[1][1]]
+            ],
+            n / 2n
+        );
     } else if (n % 2n == 0n) {
         return fastExpSquaredMat(fastExpSquaredMat(mat, n / 2n), 2n);
     } else {
         const sousMat = fastExpSquaredMat(mat, n - 1n);
-        // mat * sousMat
-        const e = sousMat[0][0];
-        const f = sousMat[0][1];
-        const g = sousMat[1][0];
-        const h = sousMat[1][1];
-        const ans = [
-            [(e * a + f * c), (e * b + f * d)],
-            [(g * a + h * c), (g * b + h * d)]
+        return [
+            [sousMat[0][0] * mat[0][0] + sousMat[0][1] * mat[1][0], sousMat[0][0] * mat[0][1] + sousMat[0][1] * mat[1][1]],
+            [sousMat[1][0] * mat[0][0] + sousMat[1][1] * mat[1][0], sousMat[1][0] * mat[0][1] + sousMat[1][1] * mat[1][1]]
         ];
-        return ans
     }
-}
+};
 
-function fib(n) {
+const fib = n => {
     n = BigInt(n);
     if (n == 0n) return 0n;
     if (n == 1n) return 1n;
-    if (n < 0) return fib(n + 2) - fib(n + 1);
-    let matI = [
+    if (n < 0n) return fib(n + 2n) - fib(n + 1n);
+    const matI = [
         [0n, 1n],
         [1n, 1n]
     ];
-    const firstTerm = fastExpSquaredMat(matI, n);
-    const a = firstTerm[0][0];
-    const b = firstTerm[0][1];
-    const c = firstTerm[1][0];
-    const d = firstTerm[1][1];
-    const lastMat = [b, d];
-    return b
-}
-
-
-// let lol = fib(0);
-// let lol = fib(1);
-let lol = fib(3);
-// let lol = fib(3);
-// let lol = fib(4);
-// let lol = fib(500000);
+    return fastExpSquaredMat(matI, n)[0][1];
+};
