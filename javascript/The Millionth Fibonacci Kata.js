@@ -32,8 +32,7 @@
 // console.log(lol);
 
 // function fib(n) {
-//     if (n === 0) return 0n;
-//     if (n === 1) return 1n;
+//     if (n === 0 || n === 1) return BigInt(n);
 //     if (n < 0) return fib(n + 2) - fib(n + 1);
 //     let [i, j] = [0n, 1n]
 //     let q = 0n;
@@ -67,15 +66,15 @@
 //     "3": 2n
 // };
 // function fib(n) {
-//     if (n === 0) return 0n;
-//     if (n === 1) return 1n;
 //     if (cache[`${n}`]) {
 //         return cache[`${n}`];
+//     } else if(n<0) {
+//         fibN = fib(n + 2) - fib(n + 1)
 //     } else {
 //         fibN = fib(n - 2) + fib(n - 1);
-//         cache[`${n}`] = fibN;
-//         return fibN;
 //     }
+//     cache[`${n}`] = fibN;
+//     return fibN;
 // }
 
 // function fib(n) {
@@ -140,8 +139,11 @@
 //     return b;
 // }
 
-console.log(fib(2000000), " expected: 0n"); // 0n
+// console.log(fib(2000000), " expected: 0n"); // 0n
 
+
+
+/////// THIS SOLUTION WORKS FAST ENOUGH !!! \·0·/
 const fastExpSquaredMat = (mat, n) => {
     if (n == 1n) {
         return mat;
@@ -168,10 +170,104 @@ const fib = n => {
     n = BigInt(n);
     if (n == 0n) return 0n;
     if (n == 1n) return 1n;
-    if (n < 0n) return fib(n + 2n) - fib(n + 1n);
     const matI = [
         [0n, 1n],
         [1n, 1n]
     ];
+    if (n < 0n){
+        if(n%2n == 0n) return - fib(-n);
+        return fib(-n);
+    } 
     return fastExpSquaredMat(matI, n)[0][1];
 };
+
+
+// Solution with library for matrix
+
+
+// Works but the mathjs library doesn't bigInt in matrix natively
+
+// const math = require('mathjs')
+// const fib = n => {
+//     // n = BigInt(n)
+//     if (n == 0n) return 0n;
+//     if (n == 1n) return 1n;
+//     if (n < 0n) return fib(n + 2n) - fib(n + 1n);
+//     const matI = math.matrix([
+//         [0n, 1n],
+//         [1n, 1n]
+//     ]);
+//     const matfn0fn1 = math.matrix([0n, 1n])
+//     const test = math.pow(matI, n);
+//     const ans = math.multiply(test, matfn0fn1);
+//     // const lol = ans._data
+//     const lol = ans._data[0]
+//     console.log("nice");
+// }
+
+
+
+
+
+
+// Attempt by "single" recursion and memoïzation:
+
+// function fib(n) {
+//     let cache = 
+//     function subFib(){
+//         if (n === 0 || n === 1) return BigInt(n);
+//         if (n < 0){
+//             return subFib(n + 2n) - subFib(n + 1n)
+//         } 
+//         else {
+//             fibN = fib(n - 2) + fib(n - 1);
+//             cache[`${n}`] = fibN;
+//             return fibN;
+//         }
+//     }
+// }
+
+// let cache = {
+//     "0": 0n,
+//     "1": 1n,
+//     "2": 1n,
+//     "3": 2n
+// };
+
+// function fib(n) {
+//     n = BigInt(n)
+//     if (cache[`${n}`]) {
+//         return BigInt(cache[`${n}`]);
+//     } else if (n < 0n) {
+//         fibN = -fib(n + 1n) + BigInt(cache[`${n+2n}`])
+//     } else {
+//         fibN = fib(n - 1n) + BigInt(cache[`${n-2n}`]);
+//     }
+//     cache[n] = `${fibN}`;
+//     return fibN;
+// }
+// console.log(fib(10000));
+
+// var cache = {
+//     "0": 0n,
+//     "1": 1n,
+//     "2": 1n,
+//     "3": 2n
+// };
+
+// function fib(n) {
+//     n = BigInt(n)
+//     if (cache[n]) {
+//         return BigInt(cache[n]);
+//     } else if (n < 0n) {
+//         fibN = -fib(n + 1n) + BigInt(cache[n+2n])
+//     } else {
+//         fibN = fib(n-2n) + BigInt(cache[n-1n]); // fib(n - 1n) 
+//     }
+//     cache[n] = fibN;
+//     return fibN;
+// }
+
+
+let lol =fib(2000000)
+console.log("lol");
