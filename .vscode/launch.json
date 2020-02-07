@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/javascript/4 Kyu/Multiplying numbers as strings.js"
+            "program": "${workspaceFolder}/javascript/3 Kyu/Multiplying numbers as strings - part 2.js"
         }
     ]
 }
