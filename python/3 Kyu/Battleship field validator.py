@@ -1,6 +1,6 @@
 def validate_battlefield(field):
     ships = {
-            "battleship": {
+        "battleship": {
             "expected": 1,
             "size": 4,
             "counted": 0
@@ -21,8 +21,8 @@ def validate_battlefield(field):
             "counted": 0
         }
     }
-    
-    #1) Check for touching ships
+
+    # 1) Check for touching ships
 
     for i in range(len(field)):
         for j in range(len(field[i])):
@@ -32,22 +32,26 @@ def validate_battlefield(field):
                 # the first field i-/+1 condition verify if the line exist before acceding to the sub array
                 # the second j-/+1 condition verify if the col exist
                 if (
-                    ((i - 1 >= 0)         and (j - 1 >= 0)            and field[i - 1][j - 1]) or
-                    ((i - 1 >= 0)         and (j + 1 < len(field[i])) and field[i - 1][j + 1]) or
-                    ((i + 1 < len(field)) and (j - 1 >= 0)            and field[i + 1][j - 1]) or
-                    ((i + 1 < len(field)) and (j + 1 < len(field[i])) and field[i + 1][j + 1])
-                ): return False
+                    ((i - 1 >= 0) and (j - 1 >= 0) and field[i - 1][j - 1]) or
+                    ((i - 1 >= 0) and (j + 1 < len(field[i])) and field[i - 1][j + 1]) or
+                    ((i + 1 < len(field)) and (j - 1 >= 0) and field[i + 1][j - 1]) or
+                    ((i + 1 < len(field)) and (j + 1 <
+                                               len(field[i])) and field[i + 1][j + 1])
+                ):
+                    return False
                 # check if ships from size 4,3,2 are touching by checking if lines cross
                 # We do not verify the size 1 because they will not be counted as submarines if they touch with another which lead to false disposition
                 # the first field i-/+1 condition verify if the line exist before acceding to the sub array
-                if ((((i - 1 >= 0) and field[i - 1][j]) or ((i + 1 < len(field)) and field[i + 1][j])) and (((j - 1 >= 0) and field[i][j - 1]) or ((j + 1 < len(field[i])) and field[i][j + 1]))): return False
+                if ((((i - 1 >= 0) and field[i - 1][j]) or ((i + 1 < len(field)) and field[i + 1][j])) and (((j - 1 >= 0) and field[i][j - 1]) or ((j + 1 < len(field[i])) and field[i][j + 1]))):
+                    return False
     # 2) Check numbers of ships :
     # At this point ships aren't touching so we can assume that every touching point are part of a ship
-    checking_Field = list(map(lambda line: list(map(lambda elm: False, line)), field))
+    checking_Field = list(
+        map(lambda line: list(map(lambda elm: False, line)), field))
     for i in range(len(field)):
         for j in range(len(field[i])):
             # has ij already been checked ?
-            if checking_Field[i][j] == False :
+            if checking_Field[i][j] == False:
                 checking_Field[i][j] == True
                 # Check if ship on ij
                 if field[i][j]:
@@ -57,11 +61,11 @@ def validate_battlefield(field):
                     # Check around for other part of ship. We don't check j-1 or i-1 because we already checked it
                     if (j + 1 < len(field[i]) and field[i][j+1]):
                         # means it's horizontal
-                        while checking :
+                        while checking:
                             if j + size < len(field[i]):
                                 checking_Field[i][j + size] = True
                                 if field[i][j + size]:
-                                    size += 1  
+                                    size += 1
                                 else:
                                     checking = False
                             else:
@@ -87,27 +91,30 @@ def validate_battlefield(field):
                         if ships[ship]["size"] == size:
                             checking = False
                             ships[ship]["counted"] += 1
-                            if ships[ship]["counted"] > ships[ship]["expected"]: return False
+                            if ships[ship]["counted"] > ships[ship]["expected"]:
+                                return False
                             break
-                    if checking: return False
+                    if checking:
+                        return False
     # end of for
 
     # At this point we know there isn't too much ship but we have to check if there is too few of it
-    for ship in ships: 
-        if ships[ship]["expected"] != ships[ship]["counted"]: return False
+    for ship in ships:
+        if ships[ship]["expected"] != ships[ship]["counted"]:
+            return False
 
     # If the grid pass all the test then the grid is valid
     return True
 
 
 battleField = [[0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-[0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-[0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-[1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-[1, 0, 0, 1, 0, 0, 0, 1, 0, 0]]
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+               [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+               [0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+               [1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+               [1, 0, 0, 1, 0, 0, 0, 1, 0, 0]]
 validate_battlefield(battleField)
