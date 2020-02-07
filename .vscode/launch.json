@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/javascript/The Millionth Fibonacci Kata.js"
+            "program": "${workspaceFolder}/javascript/4 Kyu/Multiplying numbers as strings.js"
         }
     ]
 }
