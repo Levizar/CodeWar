@@ -67,6 +67,8 @@ test(lastDigit([7, 6, 21]), 1);
 // test(lastDigit([12, 30, 21]), 6);
 // test(lastDigit([123232, 694022, 140249]), 6);
 
+// https://www.justquant.com/numbertheory/last-two-digits-of-large-number/
+
 const lastTwoDigitsOfAproduct = (p1, p2) => {
     p1 = `${p1}`;
     p2 = `${p2}`;
@@ -119,7 +121,7 @@ const lastTwoDigitsOfExponent = (base, exponent) => {
             const twoLastDigit = lastTwoDigitsOfAproduct(base,intermediateLD);
             return +twoLastDigit;
         }
-    } else if(base % 10 == 3){
+    } else if(base % 10 == 3 || base % 10 == 7){
         // If the base LD is 3, we convert it to go back to base LD in 1
         if (exponent % 4 == 0) {
             const exponedBase = Math.pow(base, 4);
@@ -136,10 +138,19 @@ const lastTwoDigitsOfExponent = (base, exponent) => {
             const exponedBase = Math.pow(base, 4);
             const dividedExponent = (exponent - 2) / 4;
             const intermediateLD1 = lastTwoDigitsOfExponent(exponedBase, dividedExponent);
-            const intermediateLD2 = lastTwoDigitsOfExponent(base, 2);
+            const intermediateLD2 = lastTwoDigitsOfAproduct(base, base);
+            const twoLastDigit = lastTwoDigitsOfAproduct(intermediateLD1,intermediateLD2);
+            return +twoLastDigit;
+        } else {
+            const exponedBase = Math.pow(base, 4);
+            const dividedExponent = (exponent - 3) / 4;
+            const intermediateLD1 = lastTwoDigitsOfExponent(exponedBase, dividedExponent);
+            const intermediateLD2 = lastTwoDigitsOfAproduct(lastTwoDigitsOfAproduct(base,base),base);
             const twoLastDigit = lastTwoDigitsOfAproduct(intermediateLD1,intermediateLD2);
             return +twoLastDigit;
         }
+    } else if(base % 10 == 2){
+
     }
     // To continue !
 };

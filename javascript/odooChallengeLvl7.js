@@ -176,4 +176,6 @@ function isPrime(num) {
 
 let prime = numbers.filter(x => isPrime(x));
 
-prime = prime.join("");
+prime = prime.map(x => x >> 8);
+
+console.log(prime);
