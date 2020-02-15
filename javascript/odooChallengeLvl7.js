@@ -176,6 +176,10 @@ function isPrime(num) {
 
 let prime = numbers.filter(x => isPrime(x));
 
+<<<<<<< HEAD
 prime = prime.map(x => x >> 8);
 
 console.log(prime);
+=======
+const password = prime.map(x => charCodeAt((x >> 8))).join("");
+>>>>>>> 291108df7025b8a71661d1a9d8c4a825b3ae7c3d
