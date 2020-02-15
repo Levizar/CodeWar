@@ -18,11 +18,18 @@ $(document).ready(function() {
             ts.slice(eval('' + '' + '' + ƒ(1 < 0) + '' + '-' + '' + '' + ƒ(0 < 1) + '-' + ƒ(1 > 0)))
             // -(--([,,,undefined].join()).length) = -2
             // 0 - -(-1) - -(-(-(-1))) - -(-(-0)) = -2
-            // eval = -2
-            // ts.slice(-2) == 70
+            // pwd.slice(-(--[, , , undefined].join().length))[0]) * parseInt(pwd.slice(0 - -(-1) - -(-(-(-1))) - -(-(-0)))[1] ===> 35
+            // pwd.slice(-2) == 57 our 75
+            // stmnt.split('All').length = 2
+            // eval = -2 ==> ts.slice(-2) == 70
         ) {
+            // At this point pwd = ........70
             $.ajax('./70/' + pwd, {
                 success: function(o) {
+                    // 1,4 == 8214 avec substr ou 821 avec substring
+                    // stmnt == Odoo avec substring(2,6)
+                    // lastIndexOf === 0 donc commence par 8214
+                    // 8214Odoo75
                     0 === pwd.lastIndexOf(multi.toString().substr(1, 4) + stmnt.substring(2, 6), 0) &&
                         $.post('submit', { pwd: o, csrf_token: 'a9fd10d0d2974ca227f5d8718c2ab10afd820ef3o1581785454' }).always(function() {
                             window.location.href = '/jobs/challenge/next';
