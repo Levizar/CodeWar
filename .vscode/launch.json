@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CodeLens (Launch) - LOL",
+            "request": "launch",
+            "mainClass": "LOL",
+            "projectName": "CodeWar_2e25c3d4"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
