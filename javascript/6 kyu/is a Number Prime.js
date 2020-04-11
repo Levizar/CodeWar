@@ -1,3 +1,14 @@
+const isPrime = n => {
+    if (n === 2 || n === 3) return true;
+    if (n < 2 || n % 2 === 0) return false;
+    let floorsqrt = Math.floor(Math.sqrt(n));
+    for (let i = 3; i <= floorsqrt; i = i + 2) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+
 function isPrime(n) {
     /* 
     fonction effectuant le test du dernier chiffre.
@@ -63,14 +74,4 @@ function isPrime(n) {
             }
             return true;
     }
-}
-
-const isPrime = n => {
-    if (n === 2 || n === 3) return true;
-    if (n < 2 || n % 2 === 0) return false;
-    let floorsqrt = Math.floor(Math.sqrt(n));
-    for (let i = 3; i <= floorsqrt; i = i + 2) {
-        if (n % i == 0) return false;
-    }
-    return true;
 }
