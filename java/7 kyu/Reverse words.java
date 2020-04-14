@@ -23,14 +23,17 @@ public class Kata{
 }
 
 // Other solution inspired by others' answer:
+/*
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Kata{
   public static String reverseWords(final String original){
-      return Arrays.stream(original.split("(?<=\s)|(?=\s+)"))
+      return Arrays.stream(original.split("(?<=\\s)|(?=\\s+)"))
         .map(word -> (new StringBuilder(word)).reverse().toString())
-        .collect(Collectors::joining);
+        .collect(Collectors.joining(""));
   }
 }
+
+*/
