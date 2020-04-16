@@ -31,24 +31,19 @@ public class TestJava {
                 final String regexDotStandard = "1";
                 final String regexDashStandard = "111";
 
-                // Remove uneeded 0
-                final String cleanedBits = bits.replaceAll("^0+", "");
+                // Remove uneeded 0 at the beginning and the end
+                final String cleanedBits = bits.replaceAll("^0+|0+$", "");
 
-                // finding t value:
+                
+                // find t value
+                Integer[] arrT = new Integer[2];
 
-                // is there a match for word standard separator ?
-                if(bits.matches(".*" + regexWordSepStandard + ".*")){
-                    // define t with the 7 "0"
-                    
-                } else if(bits.matches(".*" + regexLetterSepStandard + ".*")){
-                    // define t with the 3 "0"
+                // t = number of occurence for the shortest "0" chain
+                arrT[0] = Arrays.stream(cleanedBits.replaceAll("^1+|1+$", "").split("[^0]+")).map(chain -> chain.length()).min(Integer::compare).get();
+                // t = number of occurence for the shortest "1" chain
+                arrT[1] = Arrays.stream(cleanedBits.split("[^1]+")).map(chain -> chain.length()).min(Integer::compare).get();
 
-                } else {
-                    // define t with the shorter list of 1 = dot
-                }
-
-
-                final int t = 2; // time unit
+                int t = Arrays.stream(arrT).reduce(999, (acc,item) -> (item < acc && item != 0) ? item : acc);
 
                 // Prepare the regex to match the current morse code
                 final String regexWordSep = regexWordSepStandard.repeat(t);
@@ -62,11 +57,7 @@ public class TestJava {
                     .map(bitsWord ->
                         Arrays.stream(bitsWord.split(regexLetterSep))
                             .map(bitsCode -> {
-                                // String morseCode = (bitsCode.replaceAll(regexDash, "-"));
-                                // morseCode = morseCode.replaceAll(regexDot, ".");
                                 String morseCode = (bitsCode.replaceAll(regexDash, "-")).replaceAll(regexDot, ".").replaceAll(regexCodeSep, "");
-                                // System.out.println(morseCode);
-                                // System.out.println(MorseCode.get(morseCode));
                                 return morseCode;
                             })
                             .collect(Collectors.joining(" "))
