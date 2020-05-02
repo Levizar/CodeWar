@@ -15,20 +15,31 @@ public static class MorseCodeDecoder {
         final String cleanedBits = bits.replaceAll("^0+|0+$|^[ ]|[ ]$", "");
         if(cleanedBits.equals(" ")|cleanedBits.equals("")) return "";
         // Create an array which we can work with
+        
+        // Need to change the regex of the split !
         final String[] arrOfBits = cleanedBits.split("");
+        final Integer[] arrOfBitsLength = Arrays.stream(arrOfBits).mapToInt(String::length).boxed().toArray(size -> new Integer[size]);
 
         // Initialize 3 ArrayList for K-means alg
-        List<Integer>[] arrayOfCluster = {
-            new ArrayList<Integer>(),
-            new ArrayList<Integer>(),
-            new ArrayList<Integer>()
-        };
-
-        // get easier reference for the arrayOfCluster
-        List<Integer> cluster1 = arrayOfCluster[0];
-        List<Integer> cluster2 = arrayOfCluster[1];
-        List<Integer> cluster3 = arrayOfCluster[2];
+        List<Integer> cluster1 = new ArrayList<Integer>();
+        List<Integer> cluster2 = new ArrayList<Integer>();
+        List<Integer> cluster3 = new ArrayList<Integer>();
         
+        // "random" assignement of the value for first iteration.
+        for (int i = 0; i < arrOfBitsLength.length; i++) {
+            switch (i%3) {
+                case 0:
+                    cluster1.add(arrOfBitsLength[i]);
+                    break;
+                case 1:
+                    cluster2.add(arrOfBitsLength[i]);
+                    break;
+                case 2:
+                    cluster3.add(arrOfBitsLength[i]);
+                    break;
+            }
+        }
+
         double cluster1PreCentroid;
         double cluster2PreCentroid;
         double cluster3PreCentroid;
@@ -36,10 +47,6 @@ public static class MorseCodeDecoder {
         double cluster2newCentroid;
         double cluster3newCentroid;
 
-        // "random" assignement of the value for first iteration.
-        for (int i = 0; i < arrOfBits.length; i++) {
-            arrayOfCluster[(i % 3)].add(arrOfBits[i]);
-        }
 
         cluster1PreCentroid = cluster1.stream().mapToDouble(val -> val).average().orElse(0.0);
         cluster2PreCentroid = cluster2.stream().mapToDouble(val -> val).average().orElse(0.0);
