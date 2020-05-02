@@ -1,3 +1,5 @@
+// Can't solve the big test with it ! 
+
 
 // Last version: simple replaceAll instead of o² iteration
 import java.util.ArrayList;
