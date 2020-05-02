@@ -1,18 +1,23 @@
-// Can't solve the big test with it ! 
-
-
-// Last version: simple replaceAll instead of o² iteration
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
-public static class MorseCodeDecoder {
-            
-    public static String decodeBits(final String bits) {
-        System.out.println("bits:" + bits);
 
+public class MorseCodeDecoder {
+    
+    public static String decodeMorse(final String morseCode) {
+        if(morseCode.equals(" ")|morseCode.equals("")) return "";
+        String store = Arrays.stream(morseCode.trim().split("   "))
+                .map(word -> Arrays.stream(word.split(" "))
+                                .map(MorseCode::get)
+                                .collect(Collectors.joining("")))
+                .collect(Collectors.joining(" "))
+                .trim();
+        System.out.println(store);
+        return store;
+    }
+    
+    public static String decodeBitsAdvanced(String bits) {
+        System.out.println("bits:" + bits);
         // Clean extra 0
         final String cleanedBits = bits.replaceAll("^0+|0+$|^[ ]|[ ]$", "");
         if(cleanedBits.equals(" ")|cleanedBits.equals("")) return "";
@@ -29,32 +34,25 @@ public static class MorseCodeDecoder {
         final String[] arrOf0 = cleanedBits.replaceAll("^1+|1+$", "").split("[^0]+");
         int min0 = Arrays.stream(arrOf0).map(chain -> chain.length()).min(Integer::compare).get();
         int max0 = Arrays.stream(arrOf0).map(chain -> chain.length()).max(Integer::compare).get();
-        // this sets the minimum at the both minimum
+        double average = Arrays.stream(arrOf0).map(chain -> chain.length()).mapToInt(Integer::intValue).average().orElse(Double.NaN);
+        System.out.println("HAHAHA :" + average);
+        
         min0 = (min0 == 0 | min1 < min0) ? min1 : min0;
         min1 = min1 > min0 ? min0 : min1;
         max0 = max0 == 0 ? 1 : max0;
         
         // dash-dot/2  => before limit = dot after limit = dash
-        final double limitValue1 = ( max1 - min1) / 2.0;
-        final double limitValue2 = (arrOf0.length == 1 && arrOf0[0].length < 6) ? max0 : (limitValue1 + ((max0 - limitValue1) / 2.0));
+        final double limitValue1 = (max1 - min1) / 2.0;
+final double limitValue2 = (arrOf0.length == 1 && arrOf0[0].length() < 6) ? max0 : (limitValue1 + ((max0 - limitValue1) / 2.0));
 
         int dotTopLine = (int) Math.floor(limitValue1);
-        int dashBottomLine = (int) Math.ceil(limitValue1);
-
         dotTopLine = dotTopLine == 0 ? min1 : dotTopLine;
+        int dashBottomLine = (int) Math.ceil(limitValue1);
         dashBottomLine = dashBottomLine <= dotTopLine ? dotTopLine + 1 : dashBottomLine;
-
         int outCharTopLine = (int) Math.floor(limitValue2);
-        int wordBottomLine = (int) Math.ceil(limitValue2);
-        
         outCharTopLine = outCharTopLine < dashBottomLine ? dashBottomLine : outCharTopLine;
+        int wordBottomLine = (int) Math.ceil(limitValue2);
         wordBottomLine = wordBottomLine <= outCharTopLine ? outCharTopLine + 1 : wordBottomLine;
-        
-        final String dotRegex = String.format("1{%s,%s}", min1, dotTopLine);
-        final String inCharSepRegex = String.format("0{%s,%s}", min1, dotTopLine);
-        final String dashRegex = String.format("1{%s,}", dashBottomLine);
-        final String outCharSepRegex = String.format("0{%s,%s}", dashBottomLine, outCharTopLine);
-        final String wordSepRegex = String.format("0{%s,}", wordBottomLine);
         
         System.out.println("min0 : " + min0);
         System.out.println("max0 : " + max0);
@@ -67,6 +65,13 @@ public static class MorseCodeDecoder {
         System.out.println("limitValue2 : " + limitValue2);
         System.out.println("outCharTopLine : " + outCharTopLine);
         System.out.println("wordBottomLine : " + wordBottomLine);
+
+        final String dotRegex = String.format("1{%s,%s}", min1, dotTopLine);
+        final String inCharSepRegex = String.format("0{%s,%s}", min1, dotTopLine);
+        final String dashRegex = String.format("1{%s,}", dashBottomLine);
+        final String outCharSepRegex = String.format("0{%s,%s}", dashBottomLine, outCharTopLine);
+        final String wordSepRegex = String.format("0{%s,}", wordBottomLine);
+
         System.out.println("dotRegex");
         System.out.println(dotRegex);
         System.out.println("inCharSepRegex");
@@ -89,15 +94,5 @@ public static class MorseCodeDecoder {
                     
         System.out.println(store);
         return store;
-    }
-    
-    public static String decodeMorse(final String morseCode) {
-        if(morseCode.equals(" ")|morseCode.equals("")) return "";
-        return Arrays.stream(morseCode.trim().split("   "))
-                .map(word -> Arrays.stream(word.split(" "))
-                                .map(MorseCode::get)
-                                .collect(Collectors.joining("")))
-                .collect(Collectors.joining(" "))
-                .trim();
     }
 }
