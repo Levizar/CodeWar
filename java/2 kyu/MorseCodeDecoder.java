@@ -10,17 +10,17 @@ import static java.lang.Math.abs;
 
 public class MorseCodeDecoder {
     
-    // public static String decodeMorse(final String morseCode) {
-    //     if(morseCode.equals(" ")|morseCode.equals("")) return "";
-    //     String store = Arrays.stream(morseCode.trim().split("   "))
-    //             .map(word -> Arrays.stream(word.split(" "))
-    //                             .map(MorseCode::get)
-    //                             .collect(Collectors.joining("")))
-    //             .collect(Collectors.joining(" "))
-    //             .trim();
-    //     System.out.println(store);
-    //     return store;
-    // }
+    public static String decodeMorse(final String morseCode) {
+        if(morseCode.equals(" ")|morseCode.equals("")) return "";
+        String store = Arrays.stream(morseCode.trim().split("   "))
+                .map(word -> Arrays.stream(word.split(" "))
+                                .map(MorseCode::get)
+                                .collect(Collectors.joining("")))
+                .collect(Collectors.joining(" "))
+                .trim();
+        System.out.println(store);
+        return store;
+    }
     
     public static String decodeBitsAdvanced(String bits) {
         // Clean extra 0
@@ -29,35 +29,54 @@ public class MorseCodeDecoder {
 
         // Create array which we can work with
         final String[] arrOfBits = cleanedBits.split("(?<=0)(?=1)|(?<=1)(?=0)");
-        final Integer[] arrOfBitsLength = Arrays.stream(arrOfBits).mapToInt(String::length).boxed().toArray(size -> new Integer[size]);
-
+        
         final Integer[] bitsLengthOfArrOf1 = Arrays.stream(cleanedBits.split("[^1]+"))
-            .mapToInt(String::length)
-            .boxed()
-            .toArray(size -> new Integer[size]);
+        .mapToInt(String::length)
+        .boxed()
+        .toArray(size -> new Integer[size]);
         final Integer[] bitsLengthOfArrOf0 = Arrays.stream(cleanedBits.replaceAll("^1+|1+$", "").split("[^0]+"))
-            .mapToInt(String::length)
-            .boxed()
-            .toArray(size -> new Integer[size]);
-
+        .mapToInt(String::length)
+        .boxed()
+        .toArray(size -> new Integer[size]);
+        
         final double[] arrCentroidOf1Data = get2Centroid(bitsLengthOfArrOf1);
         final double[] arrCentroidOf0Data = get3Centroid(bitsLengthOfArrOf0);
+        
+        final Integer[] arrOfBitsLength = Arrays.stream(arrOfBits).mapToInt(String::length).boxed().toArray(size -> new Integer[size]);
+        StringBuilder morseCodeBStringBuilder = new StringBuilder();
         
         for (int i = 0; i < arrOfBitsLength.length; i++) {
             String elmToTranslate = arrOfBits[i];
             Integer length = arrOfBitsLength[i];
 
             if(elmToTranslate.matches("1+")){
-                // blabla de 1
+                double distanceToCluster1 = abs(length - arrCentroidOf1Data[0]);
+                double distanceToCluster2 = abs(length - arrCentroidOf1Data[1]);
+                if(distanceToCluster1 <= distanceToCluster2) {
+                    morseCodeBStringBuilder.append(".");
+                } else {
+                    morseCodeBStringBuilder.append("-");
+                } 
             } else if(elmToTranslate.matches("0+")){
-                // blabla de 0
+                double distanceToCluster1 = abs(length - arrCentroidOf0Data[0]);
+                double distanceToCluster2 = abs(length - arrCentroidOf0Data[1]);
+                double distanceToCluster3 = abs(length - arrCentroidOf0Data[2]);
+                if(distanceToCluster1 <= distanceToCluster2 && distanceToCluster1 <= distanceToCluster3){
+                    morseCodeBStringBuilder.append("");
+
+                } else if(distanceToCluster2 < distanceToCluster1 && distanceToCluster2 <= distanceToCluster3){
+                    morseCodeBStringBuilder.append(" ");
+
+                } else if(distanceToCluster3 < distanceToCluster1 && distanceToCluster3 < distanceToCluster2 ){
+                    morseCodeBStringBuilder.append("   ");
+                } 
             } else {
                 System.out.println("Not 0/1 => That shouldn't happen");
             }
 
         }
 
-        return "";
+        return morseCodeBStringBuilder.toString();
     }
     
     public static double[] get2Centroid(Integer[] arrOfData){
