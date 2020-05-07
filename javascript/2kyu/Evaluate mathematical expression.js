@@ -31,7 +31,13 @@ const calc = (string) => {
                 }
                 const nbr1 = parseFloat(initArr[i - 1]);
                 let nbr2;
-                nbr2 = initArr[i + 1] === "-" ? -parseFloat(initArr[i + 2]) : parseFloat(initArr[i + 1]);
+                let nbr2Neg = false;
+                if(initArr[i + 1] === "-"){
+                    nbr2 = -parseFloat(initArr[i + 2])
+                    nbr2Neg = true;
+                }else{
+                    nbr2 = parseFloat(initArr[i + 1]);
+                }
                 let result;
                 switch (initArr[i]) {
                     case "*":
@@ -65,7 +71,7 @@ const calc = (string) => {
                         console.log("default case operation : that shouldn't happen");
                         break;
                 }
-                initArr.length < 3 ? initArr.splice(i - 1, 2, result) : initArr.splice(i - 1, 3, result);
+                initArr.length < 3 ? initArr.splice(i - 1, 2, result) : nbr2Neg ? initArr.splice(i - 1, 4, result) : initArr.splice(i - 1, 3, result);
                 i = i - 1;
             }
         }
@@ -101,3 +107,4 @@ const test = (fun, input, expectedOutput) => {
 // test(calc,"(1 - 2) + -(-(-(-4)))", 3); // ok
 // test(calc,"(123.45*(678.90 / (-2.5+ 11.5)-(((80 -(19))) *33.25)) / 20) - (123.45*(678.90 / (-2.5+ 11.5)-(((80 -(19))) *33.25)) / 20) + (13 - 2)/ -(-11) ", 1); // ok
 // test(calc,"12 * -123", -1476); // ok
+test(calc,"2 * -2 * 4", -16);
