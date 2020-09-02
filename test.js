@@ -69,4 +69,11 @@ const memo = fun => {
 
 const add = (...args) => args.reduce((acc, item) => acc + item, 0);
 
+
+
+const myMap = new Map();
+let stringRandom = "";
+myMap.forEach((value,key) => {
+    stringRandom += `${value} \n`;
+})
   

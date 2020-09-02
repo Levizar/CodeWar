@@ -3,10 +3,11 @@ import re
 
 
 def increment_string(strng):
+    digits = ""
     match = re.search("\d*$", strng)
     if match:
         digits = match.group(0)
-    return strng + "1" if digits == "" else strng[:-len(digits)] + str(int(digits)+1).zfill(len(digits))
+    return strng + "1" if digits == "" else strng[:-len(digits)] + str(int(digits) + 1).zfill(len(digits))
 
 # Original solution:
 

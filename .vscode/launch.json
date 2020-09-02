@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    
         {
             "type": "java",
             "name": "CodeLens (Launch) - LOL",
@@ -18,7 +19,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/javascript/3 Kyu/Multiplying numbers as strings - part 2.js"
+            "program": "${workspaceFolder}/javascript/7 Kyu/By 3, or not by 3 That is the question . . ..js"
         }
     ]
 }
