@@ -4,6 +4,5 @@ CodeWar.iml
 test.md
 test.js
 TestJava.java
-.vscode/launch.json
-.vscode/settings.json
+.vscode
 venv/
