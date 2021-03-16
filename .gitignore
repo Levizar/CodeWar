@@ -1,6 +1,7 @@
 node_modules/
 CodeWar.iml
 .idea
+.vscode
 test.md
 test.js
 TestJava.java
