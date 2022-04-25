@@ -12,7 +12,7 @@ def calc(expression):
     }
     state = 'formatting_expression'
     while state != 'done':
-        state, action = FSM.run(state, transitions)
+        state, action = transitions[state]
         expression = action(expression)
     return expression
 
@@ -68,13 +68,6 @@ def format_output(expression):
     regex = re.compile(r"\d+\.0+")
     expression = regex.sub(lambda m: str(int(float(m[0]))), expression)
     return float(expression)
-
-
-class FSM:
-    @classmethod
-    def run(cls, state, transitions):
-        state, action = transitions[state]
-        return state, action
 
 
 def test(fun, inp, expected_output):
