@@ -18,7 +18,7 @@ def calc(expression):
 
 def format_expression(expression):
     regex = re.compile(r"\d+\.*\d*|[)(*/+-]")
-    return "".join(regex.findall(expression))
+    return eliminate_sign_redundancy("".join(regex.findall(expression)))
 
 
 def eliminate_parentheses(expression):
@@ -65,8 +65,8 @@ def perform_substitution(regex, expression):
 
 
 def format_output(expression):
-    regex = re.compile(r"\d+\.0+")
-    expression = regex.sub(lambda m: str(int(float(m[0]))), expression)
+    regex = re.compile(r"\d+\.\d+")
+    expression = regex.sub(lambda m: str(float(m[0])), expression)
     return float(expression)
 
 
@@ -79,25 +79,25 @@ def test(fun, inp, expected_output):
         print(f"output: {output} , expected: {expected_output} , input: {inp}")
 
 
-# test(calc, '(1+1)', 2)
-# test(calc, '(1+1)+(2+2)', 6)
-# test(calc, '((1+1))', 2)
-# test(calc, '1+1', 2)
-# test(calc, '(-(-1))', 1)
-# test(calc, '123', 123)
-# test(calc, '-123', -123)
-# test(calc, '12* 123', 1476)
-# test(calc, '4/2', 2)
-# test(calc, '2*2*2', 8)
-# test(calc, '2 /2+3 * 4.75- -6', 21.25)
-# test(calc, '2 / (2 + 3) * 4.33 - -6', 7.732)
-# test(calc, '12*-1', -12)
-# test(calc, "(1 - 2) + -(-(-(-4)))", 3)
-# test(calc, "12 * -123", -1476)
-# test(calc, "2 * -2 * 4", -16)
-# test(calc, "12* 123/-(-5 + 2)", 492)
-# test(calc, "(123.45*(678.90 / (-2.5+ 11.5)-(((80 -(19))) *33.25)) / 20) - (123.45*(678.90 / (-2.5+ 11.5)-(((80 -(19))) *33.25)) / 20) + (13 - 2)/ -(-11) ", 1)
-# test(calc, "-80 - ((((54 * 4) * -67) / -28) / -39) - (-34 * -5)", -236.74725274725273)
-# test(calc, "-97 + -13 + -74 - -100 - 87 - 5 / -10 + -46", -216.5)
-# test(calc, "-80 - 54 * 4 * -67 / -28 / -39 - -34 * -5", -236.74725274725273)
+test(calc, '(1+1)', 2)
+test(calc, '(1+1)+(2+2)', 6)
+test(calc, '((1+1))', 2)
+test(calc, '1+1', 2)
+test(calc, '(-(-1))', 1)
+test(calc, '123', 123)
+test(calc, '-123', -123)
+test(calc, '12* 123', 1476)
+test(calc, '4/2', 2)
+test(calc, '2*2*2', 8)
+test(calc, '2 /2+3 * 4.75- -6', 21.25)
+test(calc, '2 / (2 + 3) * 4.33 - -6', 7.732)
+test(calc, '12*-1', -12)
+test(calc, "(1 - 2) + -(-(-(-4)))", 3)
+test(calc, "12 * -123", -1476)
+test(calc, "2 * -2 * 4", -16)
+test(calc, "12* 123/-(-5 + 2)", 492)
+test(calc, "(123.45*(678.90 / (-2.5+ 11.5)-(((80 -(19))) *33.25)) / 20) - (123.45*(678.90 / (-2.5+ 11.5)-(((80 -(19))) *33.25)) / 20) + (13 - 2)/ -(-11) ", 1)
+test(calc, "-80 - ((((54 * 4) * -67) / -28) / -39) - (-34 * -5)", -236.74725274725273)
+test(calc, "-97 + -13 + -74 - -100 - 87 - 5 / -10 + -46", -216.5)
+test(calc, "-80 - 54 * 4 * -67 / -28 / -39 - -34 * -5", -236.74725274725273)
 test(calc, "-91 * 25 * 95 / -86 + 88 - 38 + -68 - -81", 2576.0813953488373)
