@@ -23,18 +23,13 @@ function SQLEngine(database){
     let res = rows;
     for (const [join, cond] of Object.entries(joins)) {
       const [lCond, op, rCond] = cond;
-//   joins:
-//   { director: [ 'director.id', '=', 'movie.directorID' ] }
-      let [ltable, lfield] = lCond.split('.');
-      let [rtable, rfield] = rCond.split('.');
-
       console.log([lCond, op, rCond]);
 
       const newRes = [];
       for (const row of res) {
         for (const jrow of database[join]) {
           const newRow = {...row, ...formatRow(join, jrow)};
-          if (newRow[lCond] == newRow[rCond]) {
+          if (newRow[lCond] === newRow[rCond]) {
             newRes.push(newRow);
           }
         }
@@ -90,7 +85,7 @@ function SQLEngine(database){
             mode = 'where';
             continue;
       }
-      if (s[0] == "'") {
+      if (s[0] === "'") {
         s = s.substring(1, s.length - 1);
       }
       s = s.replace(/''/g, "'");
