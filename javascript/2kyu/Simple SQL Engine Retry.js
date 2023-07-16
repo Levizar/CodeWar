@@ -1,15 +1,26 @@
 function SQLEngine(database){
-  
+
   this.execute = function(query){
+    // Parse the query
     console.log(query);
     console.log(``);
     const { toSelect, from, joins, where } = this.parseQuery(query);
 
+//     console.log(`to select: ${toSelect}`);
+    console.log(`from: ${from}`);
+    console.log(``);
+    console.log('joins:');
+    console.log(joins);
+    console.log(``);
+    console.log('where:');
+    console.log(where);
+    console.log(``);
+
     // Gather the results
     // starts with from table and format their properties name to contain the table name
     const rows = database[from].map(row => formatRow(from, row));
-    let res = rows;
     const alreadyJoined = [from];
+    let res = rows;
     for (const [join, cond] of Object.entries(joins)) {
       const [lCond, op, rCond] = cond;
 //   joins:
@@ -18,7 +29,7 @@ function SQLEngine(database){
       let [rtable, rfield] = rCond.split('.');
 
       console.log([lCond, op, rCond]);
-      
+
       const newRes = [];
       for (const row of res) {
         for (const jrow of database[join]) {
@@ -30,7 +41,7 @@ function SQLEngine(database){
       }
       res = newRes;
     }
-      
+
     console.log('res:');
     console.log(res);
     console.log('');
@@ -51,7 +62,7 @@ function SQLEngine(database){
     console.log(finalRes);
     return finalRes;
   }
-  
+
   this.parseQuery = function(query){
     const toSelect = [];
     const joins = {};
@@ -59,7 +70,9 @@ function SQLEngine(database){
     let mode = false;
     let from = false;
     let lastJoin = false;
-    for(const s of query.split(' ')){
+    // match all white space except white space enclosed by single quote
+    const q = query.split(/\s+(?=(?:[^']*'[^']*')*[^']*$)/)
+    for(let s of q){
       switch (s.toLowerCase()) {
           case 'select':
             mode = 'select';
@@ -77,6 +90,10 @@ function SQLEngine(database){
             mode = 'where';
             continue;
       }
+      if (s[0] == "'") {
+        s = s.substring(1, s.length - 1);
+      }
+      s = s.replace(/''/g, "'");
       switch (mode) {
           case 'select':
             toSelect.push(s.replaceAll(',', ''));
@@ -96,15 +113,6 @@ function SQLEngine(database){
             continue;
       }
     }
-//     console.log(`to select: ${toSelect}`);
-//     console.log(`from: ${from}`);
-//     console.log(``);
-//     console.log('joins:');
-//     console.log(joins);
-//     console.log(``);
-//     console.log('where:');
-//     console.log(where);
-//     console.log(``);
     return {
       toSelect: toSelect,
       from: from,
@@ -124,8 +132,19 @@ function conditionHandler(where, row) {
     if (!where.length) {
       return true;
     }
+    console.log(where);
     switch (where[1]) {
         case '=':
           return row[where[0]] == where[2];
+        case '<>':
+          return row[where[0]] != where[2];
+        case '>':
+          return row[where[0]] > where[2];
+        case '<':
+          return row[where[0]] < where[2];
+        case '>=':
+          return row[where[0]] >= where[2];
+        case '<=':
+          return row[where[0]] <= where[2];
     }
 }
